@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'Master' }
+  agent { label 'master' }
 
   tools {
     jdk "java11"
