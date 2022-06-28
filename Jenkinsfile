@@ -2,7 +2,7 @@ pipeline {
   agent { label 'Master' }
 
   tools {
-    jdk "java 11"
+    jdk "java11"
     maven "maven"
   }
   
