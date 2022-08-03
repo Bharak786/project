@@ -2,16 +2,16 @@ pipeline {
   agent any
 
   tools {
-    jdk 'Java8'
-    maven 'Maven'
+    jdk 'java8'
+    maven 'maven'
   }
   
   environment {
 
-      sonar_url = 'http://10.128.15.219:9000'
+      sonar_url = 'http://10.128.0.2:9000'
       sonar_username = 'admin'
       sonar_password = 'admin'
-      nexus_url = '10.128.15.219:8081'
+      nexus_url = '10.128.0.2:8081'
       artifact_version = '4.0.0'
 
  }
@@ -50,21 +50,21 @@ stages {
         steps {
           sh '''
           cd ${WORKSPACE}
-          docker build -t gcr.io/ferrous-syntax-348017/helloworld --file=Dockerfile ${WORKSPACE}
+          docker build -t gcr.io/pivotal-purpose-357609/helloworld --file=Dockerfile ${WORKSPACE}
           '''
         }
       }
       stage ('Publish Docker Image'){
         steps {
           sh '''
-          docker push gcr.io/ferrous-syntax-348017/helloworld
+          docker push gcr.io/pivotal-purpose-357609/helloworld
           '''
         }
       }
       stage ('Deploy to kubernetes'){
         steps{
           script {
-            sh "kubectl config use-context gke_ferrous-syntax-348017_us-central1-c_demo14"
+            sh "kubectl config use-context gke_pivotal-purpose-357609_us-central1-c_demo-15"
             sh "cd ${WORKSPACE}"
             sh "kubectl delete -f '${WORKSPACE}'/hello.yaml"
             sh "kubectl apply -f '${WORKSPACE}'/hello.yaml"
